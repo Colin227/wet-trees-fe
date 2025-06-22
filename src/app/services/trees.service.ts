@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
       
 
 import { environment } from '../../environments/environment';
-import { Tree } from '@models';
+import { CreateTreeDto, Tree } from '@models';
 
 
     
@@ -17,5 +17,9 @@ export class TreesService {
 
   getAllTrees() {
     return this._http.get<Tree[]>(`${environment.baseUrl}/trees`);
+  }
+
+  createTree(treeDto: CreateTreeDto) {
+    return this._http.post<Tree>(`${environment.baseUrl}/trees`, treeDto);
   }
 }

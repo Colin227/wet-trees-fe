@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Create/Edit Tree</h2>
+<mat-dialog-content class="form-container">
+  
+  <mat-form-field>
+    <mat-label>Tree Species</mat-label>
+    <input matInput [formControl]="form.controls.species" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Planting Date</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="form.controls.plantedAt">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker ></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select [formControl]="form.controls.status">
+      <mat-option value="healthy">Healthy</mat-option>
+      <mat-option value="needs_attention">Needs Attention</mat-option>
+      <mat-option value="dead">Dead</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+    <mat-form-field>
+    <mat-label>Site</mat-label>
+    <mat-select [formControl]="form.controls.siteId">
+        @for(site of sites$ | async; track site.id) {
+          <mat-option [value]="site.id">{{ site.name }}</mat-option>
+        }
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+  <button mat-button (click)="onConfirmClick()">Ok</button>
+</mat-dialog-actions>

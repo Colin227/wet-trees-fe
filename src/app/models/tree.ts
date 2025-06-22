@@ -1,8 +1,7 @@
-export interface Tree {
-    id: number;
-    species: string;
-    plantedAt: Date;
-    status: TreeStatus;
-}
+import { components } from '../api-types';
 
-export type TreeStatus = 'healthy' | 'diseased' | 'dead';
+
+export type CreateTreeDto = components['schemas']['CreateTreeDto'];
+export type UpdateTreeDto = components['schemas']['UpdateTreeDto'];
+
+export type Tree = components['schemas']['Tree'];
