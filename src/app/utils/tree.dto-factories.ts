@@ -6,7 +6,7 @@ export function createTreeDtoFromForm(form: FormGroup): CreateTreeDto {
     species: form.get('species')?.value,
     plantedAt: form.get('plantedAt')?.value,
     status: form.get('status')?.value,
-    siteId: form.get('siteId')?.value,
+    zoneId: form.get('zoneId')?.value,
   };
 }
 

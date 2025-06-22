@@ -1,12 +1,15 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { WateringEvent } from '@models';
 import { WateringsService } from 'app/services/waterings.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-waterings',
-  imports: [AsyncPipe, JsonPipe],
+  imports: [AsyncPipe, JsonPipe, MatButtonModule, MatIconModule, MatTableModule, DatePipe],
   templateUrl: './waterings.component.html',
   styleUrl: './waterings.component.scss'
 })
@@ -16,6 +19,8 @@ private wateringService = inject(WateringsService);
   private _waterings$ = new BehaviorSubject<WateringEvent[]>([]);
 
   waterings$ = this._waterings$.asObservable();
+
+  dataSource = new MatTableDataSource<Partial<WateringEvent>>();
 
   private _loadWaterings() {
     this.wateringService.getAllWaterings().subscribe({

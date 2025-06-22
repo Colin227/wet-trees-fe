@@ -78,12 +78,12 @@ export interface paths {
             cookie?: never;
         };
         get: operations["TreesController_findOne"];
-        put?: never;
+        put: operations["TreesController_update"];
         post?: never;
         delete: operations["TreesController_remove"];
         options?: never;
         head?: never;
-        patch: operations["TreesController_update"];
+        patch?: never;
         trace?: never;
     };
     "/watering-events": {
@@ -118,6 +118,38 @@ export interface paths {
         patch: operations["WateringEventsController_update"];
         trace?: never;
     };
+    "/zones": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ZonesController_findAll"];
+        put?: never;
+        post: operations["ZonesController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/zones/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ZonesController_findOne"];
+        put?: never;
+        post?: never;
+        delete: operations["ZonesController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["ZonesController_update"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -130,15 +162,7 @@ export interface components {
             id: number;
             name: string;
             location: string;
-            trees: components["schemas"]["Tree"][];
-        };
-        WateringEvent: {
-            id: number;
-            /** Format: date-time */
-            wateredAt: string;
-            notes: string;
-            recordedBy: string;
-            tree: components["schemas"]["Tree"];
+            zones: components["schemas"]["Zone"][];
         };
         Tree: {
             id: number;
@@ -146,7 +170,21 @@ export interface components {
             /** Format: date-time */
             plantedAt: string;
             status: string;
+            zone: components["schemas"]["Zone"];
+        };
+        WateringEvent: {
+            id: number;
+            /** Format: date-time */
+            wateredAt: string;
+            notes: string;
+            recordedBy: string;
+            zone: components["schemas"]["Zone"];
+        };
+        Zone: {
+            id: number;
+            name: string;
             site: components["schemas"]["Site"];
+            trees: components["schemas"]["Tree"][];
             wateringEvents: components["schemas"]["WateringEvent"][];
         };
         UpdateSiteDto: Record<string, never>;
@@ -155,16 +193,18 @@ export interface components {
             plantedAt: string;
             /** @enum {string} */
             status: "healthy" | "needs_attention" | "dead";
-            siteId: number;
+            zoneId: number;
         };
         UpdateTreeDto: Record<string, never>;
         CreateWateringEventDto: {
             wateredAt: string;
             notes?: string;
             recordedBy: string;
-            treeId: number;
+            zoneId: number;
         };
         UpdateWateringEventDto: Record<string, never>;
+        CreateZoneDto: Record<string, never>;
+        UpdateZoneDto: Record<string, never>;
     };
     responses: never;
     parameters: never;
@@ -373,28 +413,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": string;
-                };
-            };
-        };
-    };
-    TreesController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": string;
+                    "application/json": components["schemas"]["Tree"];
                 };
             };
         };
@@ -419,8 +438,27 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": string;
+                    "application/json": components["schemas"]["Tree"];
                 };
+            };
+        };
+    };
+    TreesController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -527,6 +565,115 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["WateringEvent"];
+                };
+            };
+        };
+    };
+    ZonesController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    ZonesController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateZoneDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    ZonesController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    ZonesController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    ZonesController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateZoneDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
                 };
             };
         };

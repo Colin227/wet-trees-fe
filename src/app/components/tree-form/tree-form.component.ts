@@ -13,7 +13,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CreateTreeDto, Site, Tree, UpdateTreeDto } from '@models';
+import { CreateTreeDto, Site, Tree, UpdateTreeDto, Zone } from '@models';
 import { createTreeDtoFromForm } from 'app/utils/tree.dto-factories';
 import { TreesService } from 'app/services/trees.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { SitesService } from 'app/services/sites.service';
+import { ZonesService } from 'app/services/zones.service';
 
 @Component({
   selector: 'app-tree-form',
@@ -35,16 +36,16 @@ export class TreeFormComponent implements OnInit {
   readonly data = inject<Tree | undefined>(MAT_DIALOG_DATA);
   private _fb = inject(FormBuilder);
   private _treeService = inject(TreesService);
-  private _siteService = inject(SitesService); // Assuming TreesService has a method to get sites
+  private _zonesService = inject(ZonesService); // Assuming TreesService has a method to get sites
 
-  sites$!: Observable<Site[]>;
+  zones$!: Observable<Zone[]>;
 
   form = this._fb.group({
     id: [this.data?.id || null], // Assuming 'id' is optional and can be null for new trees
     species: [this.data?.species || '', Validators.required],
     plantedAt: [this.data?.plantedAt || new Date(), Validators.required],
     status: [this.data?.status || 'healthy', Validators.required],
-    siteId: [this.data?.site?.id || null, Validators.required],
+    zoneId: [this.data?.zone?.id || null, Validators.required],
   });
 
   isEditMode = !!this.data?.id;
@@ -52,7 +53,7 @@ export class TreeFormComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.sites$ = this._siteService.getAllSites();
+    this.zones$ = this._zonesService.getAllZones();
   }
 
   onConfirmClick(): void {
