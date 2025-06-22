@@ -10,7 +10,7 @@ export function createTreeDtoFromForm(form: FormGroup): CreateTreeDto {
   };
 }
 
-// export function updateTreeDtoFromForm(form: FormGroup): UpdateTreeDto {
+// export function updateTreeDtoFromForm(form: FormGroup, id: number) {
 //   return {
 //     species: form.get('species')?.value,
 //     plantedAt: form.get('plantedAt')?.value,

@@ -40,6 +40,7 @@ export class TreeFormComponent implements OnInit {
   sites$!: Observable<Site[]>;
 
   form = this._fb.group({
+    id: [this.data?.id || null], // Assuming 'id' is optional and can be null for new trees
     species: [this.data?.species || '', Validators.required],
     plantedAt: [this.data?.plantedAt || new Date(), Validators.required],
     status: [this.data?.status || 'healthy', Validators.required],
@@ -55,14 +56,6 @@ export class TreeFormComponent implements OnInit {
   }
 
   onConfirmClick(): void {
-    // if (this.form.invalid) {
-    //   console.error("Form is invalid, cannot confirm.");
-    //   return;
-    // }
-
-    
-    // // if form is valid, close with current form data
-    // console.log("On confirm click, ", this.form.value);
     this.submit();
   }
 
@@ -71,12 +64,13 @@ export class TreeFormComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) return; // TODO: Show validation errors
 
     let dto: CreateTreeDto | UpdateTreeDto;
 
     if (this.isEditMode) {
-      throw new Error("Edit mode is not implemented yet.");
+      dto = createTreeDtoFromForm(this.form);
+      this._updateTree(dto);
     } else {
       dto = createTreeDtoFromForm(this.form);
       this._createTree(dto);
@@ -96,15 +90,16 @@ export class TreeFormComponent implements OnInit {
       });
   }
 
-  private _updateTree = (dto: UpdateTreeDto) => {
-    // this._treeService.updateTree(dto).subscribe({
-    //   next: (tree: Tree) => {
-    //     console.log("Tree updated successfully:", tree);
-    //   },
-    //   error: (err: any) => {
-    //     console.error("Error updating tree:", err);
-    //   }
-    // });
-    throw new Error("Update tree is not implemented yet.");
+  private _updateTree = (dto: CreateTreeDto) => {
+    this._treeService.updateTree(this.data!.id, dto).subscribe({
+        next: (tree: Tree) => {
+          console.log("Tree updated successfully:", tree);
+          this.dialogRef.close(tree); // Close the dialog and return the updated tree
+        },
+        error: (err: any) => {
+          console.error("Error updating tree:", err);
+        }
+      });
   }
+
 }

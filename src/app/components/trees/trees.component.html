@@ -1,4 +1,49 @@
-<h2>Trees</h2>
-<button mat-flat-button color="primary" (click)="createTree()"><mat-icon>add</mat-icon>Create new tree</button>
+<div class="trees-container">
+    <h2>Trees</h2>
+    <button mat-flat-button color="primary" (click)="createTree()"><mat-icon>add</mat-icon>Create new tree</button>
 
-{{ trees$ | async | json }}
+    <!-- {{ trees$ | async | json }} -->
+
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 trees-table">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let tree"> {{tree.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="species">
+            <th mat-header-cell *matHeaderCellDef>Species</th>
+            <td mat-cell *matCellDef="let tree"> {{tree.species}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="plantedAt">
+            <th mat-header-cell *matHeaderCellDef>Planting Date</th>
+            <td mat-cell *matCellDef="let tree"> {{tree.plantedAt | date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let tree"> {{tree.status}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="site">
+            <th mat-header-cell *matHeaderCellDef>Site</th>
+            <td mat-cell *matCellDef="let tree"> {{tree.site.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let tree">
+                <button mat-icon-button (click)="editTree(tree)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="deleteTree(tree)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

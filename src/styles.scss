@@ -23,4 +23,18 @@ html {
   @include mat.toolbar-overrides((
     container-background-color: var(--mat-sys-primary-container),
   ));
+
+    @include mat.table-overrides((
+    // background-color: #4d4d4d,
+    background-color: #294d4c
+    // header-headline-color: black,
+
+  ));
+
+  @include mat.elevation-classes();
+  @for $i from 0 through 24 {
+  .mat-elevation-z#{$i} {
+    @include mat.elevation($i);
+  }
+}
 }

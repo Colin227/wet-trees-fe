@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Create/Edit Sites</h2>
+<mat-dialog-content class="form-container">
+
+    <mat-form-field>
+        <mat-label>Site Name</mat-label>
+        <input matInput [formControl]="form.controls.name" />
+        @if (form.controls.name.hasError('required')) {
+        <mat-error>Name is required</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Location</mat-label>
+        <input matInput [formControl]="form.controls.location">
+        @if (form.controls.location.hasError('required')) {
+        <mat-error>Location is required</mat-error>
+        }
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onConfirmClick()">Ok</button>
+</mat-dialog-actions>
