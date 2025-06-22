@@ -1,7 +1,7 @@
-export interface WateringEvent {
-    id: number;
-    wateredAt: Date;
-    notes: string;
-    recordedBy: string;
+import { components } from '../api-types';
 
-}
+
+export type CreateWateringDto = components['schemas']['CreateWateringEventDto'];
+export type UpdateWateringDto = components['schemas']['UpdateWateringEventDto'];
+
+export type WateringEvent = components['schemas']['WateringEvent'];

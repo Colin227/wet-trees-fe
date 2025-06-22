@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Create'}} Watering Event</h2>
+<mat-dialog-content class="form-container">
+
+    <mat-form-field>
+        <mat-label>Watering Date</mat-label>
+        <input matInput [matDatepicker]="picker" [formControl]="form.controls.wateredAt">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (form.controls.wateredAt.hasError('required')) {
+        <mat-error>A valid date is required</mat-error>
+        }
+    </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label>Watered By</mat-label>
+        <input matInput [formControl]="form.controls.recordedBy">
+        @if (form.controls.recordedBy.hasError('required')) {
+        <mat-error>A name is required</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Notes</mat-label>
+        <textarea matInput [formControl]="form.controls.notes"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Zone</mat-label>
+        <mat-select [formControl]="form.controls.zoneId">
+            @for(site of sites$ | async; track site.id) {
+            <mat-optgroup [label]="site.name">
+                @for(zone of site.zones; track zone.id) {
+                <mat-option [value]="zone.id">{{ zone.name }}</mat-option>
+                }
+            </mat-optgroup>
+            }
+        </mat-select>
+        @if (form.controls.zoneId.hasError('required')) {
+        <mat-error>A zone is required</mat-error>
+        }
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onConfirmClick()">Ok</button>
+</mat-dialog-actions>

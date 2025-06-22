@@ -36,7 +36,7 @@ export class TreeFormComponent implements OnInit {
   readonly data = inject<Tree | undefined>(MAT_DIALOG_DATA);
   private _fb = inject(FormBuilder);
   private _treeService = inject(TreesService);
-  private _zonesService = inject(ZonesService); // Assuming TreesService has a method to get sites
+  private _zonesService = inject(ZonesService);
 
   zones$!: Observable<Zone[]>;
 
