@@ -1,40 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
 @use '../theme-colors' as my-theme;
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
-background: #f7f7f7;}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #222623;
+  color: white;
+}
 
 
 html {
   color-scheme: light dark;
-  @include mat.theme((
-    color: (
-      primary: my-theme.$primary-palette,
-      tertiary: my-theme.$tertiary-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  @include mat.theme((color: (primary: my-theme.$primary-palette,
+        tertiary: my-theme.$tertiary-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
 }
 
 
 :root {
-  @include mat.toolbar-overrides((
-    container-background-color: var(--mat-sys-primary-container),
-  ));
+  @include mat.toolbar-overrides((container-background-color: var(--mat-sys-primary-container),
+    ));
 
-    @include mat.table-overrides((
-    // background-color: #4d4d4d,
-    background-color: #294d4c
-    // header-headline-color: black,
+  @include mat.table-overrides(( // background-color: #4d4d4d,
+      background-color: #294d4c // header-headline-color: black,
 
-  ));
+    ));
 
   @include mat.elevation-classes();
+
   @for $i from 0 through 24 {
-  .mat-elevation-z#{$i} {
-    @include mat.elevation($i);
+    .mat-elevation-z#{$i} {
+      @include mat.elevation($i);
+    }
   }
-}
 }

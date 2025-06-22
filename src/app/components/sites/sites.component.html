@@ -1,7 +1,8 @@
 <div class="sites-container">
     <h2>Sites</h2>
     <button mat-flat-button color="primary" (click)="createSite()"><mat-icon>add</mat-icon>Create new site</button>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 sites-table">
+    <table mat-table matSort matSortActive="id" matSortDirection="asc" matSortDisabled [dataSource]="dataSource"
+        multiTemplateDataRows class="mat-elevation-z8 sites-table">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>ID</th>
             <td mat-cell *matCellDef="let site"> {{site.id}} </td>
@@ -17,6 +18,8 @@
             <td mat-cell *matCellDef="let site"> {{site.location}} </td>
         </ng-container>
 
+
+
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let site">
@@ -26,10 +29,63 @@
                 <button mat-icon-button (click)="deleteSite(site)">
                     <mat-icon>delete</mat-icon>
                 </button>
+                <button mat-icon-button aria-label="expand row" (click)="toggle(site); $event.stopPropagation()"
+                    class="example-toggle-button" [class.example-toggle-button-expanded]="isExpanded(site)">
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
             </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <!-- <ng-container matColumnDef="expand">
+    <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        mat-icon-button
+        aria-label="expand row"
+        (click)="toggle(element); $event.stopPropagation()"
+        class="example-toggle-button"
+        [class.example-toggle-button-expanded]="isExpanded(element)">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </td>
+  </ng-container> -->
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let site" [attr.colspan]="displayedColumnsWithExpand.length">
+                <div class="site-detail-wrapper" [class.site-detail-wrapper-expanded]="isExpanded(site)">
+                    <div class="site-detail">
+
+                        @for(zone of site.zones; track zone.id) {
+                        <div class="site-description">
+                            {{zone.name}} 
+                            <div>
+                            <button mat-icon-button (click)="editZone(zone, site)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button (click)="deleteZone(zone)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            </div>
+
+                        </div>
+                        }
+                        @if(site.zones.length === 0) {
+                        <div class="site-description">
+                            No zones available for this site.
+                        </div>
+                        }
+                        <button mat-flat-button color="primary" class="mrgn-bttm-md"
+                            (click)="createZone(site)"><mat-icon>add</mat-icon>Create new zone</button>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsWithExpand"></tr>
+        <tr mat-row *matRowDef="let site; columns: displayedColumnsWithExpand;" class="example-element-row"
+            [class.example-expanded-row]="isExpanded(site)" (click)="toggle(site)">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
 </div>

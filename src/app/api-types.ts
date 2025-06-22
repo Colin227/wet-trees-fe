@@ -203,8 +203,16 @@ export interface components {
             zoneId: number;
         };
         UpdateWateringEventDto: Record<string, never>;
-        CreateZoneDto: Record<string, never>;
-        UpdateZoneDto: Record<string, never>;
+        CreateZoneDto: {
+            name: string;
+            location: string;
+            siteId: number;
+        };
+        UpdateZoneDto: {
+            name?: string;
+            location?: string;
+            siteId?: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -583,7 +591,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": string;
+                    "application/json": components["schemas"]["Zone"][];
                 };
             };
         };
@@ -606,7 +614,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": string;
+                    "application/json": components["schemas"]["Zone"];
                 };
             };
         };
@@ -627,7 +635,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": string;
+                    "application/json": components["schemas"]["Zone"];
                 };
             };
         };
@@ -647,9 +655,7 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": string;
-                };
+                content?: never;
             };
         };
     };
@@ -673,7 +679,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": string;
+                    "application/json": components["schemas"]["Zone"];
                 };
             };
         };
