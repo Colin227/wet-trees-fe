@@ -31,6 +31,9 @@ export class DashboardComponent implements OnInit {
         labels: ['Healthy', 'Needs Attention'],
         series: [data.totalTrees, data.treesNeedingAttention],
         colors: ['#66bb6a', '#ef5350'],
+        dataLabels: {
+          enabled: false
+        },
         legend: {
           labels: {
             colors: "#ffffff",
