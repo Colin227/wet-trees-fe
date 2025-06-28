@@ -30,6 +30,7 @@ export class WateringCoverageComponent implements OnInit {
                 background: "#293450"
               },
               track: {
+                background: "#1e2b3c",
                 dropShadow: {
                   enabled: true,
                   top: 2,

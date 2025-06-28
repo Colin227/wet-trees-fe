@@ -198,6 +198,86 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/dashboard/wateringCoverage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DashboardController_getWateringCoverage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/environment-readings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["EnvironmentReadingsController_findAll"];
+        put?: never;
+        post: operations["EnvironmentReadingsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/environment-readings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["EnvironmentReadingsController_findOne"];
+        put?: never;
+        post?: never;
+        delete: operations["EnvironmentReadingsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["EnvironmentReadingsController_update"];
+        trace?: never;
+    };
+    "/devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DevicesController_findAll"];
+        put?: never;
+        post: operations["DevicesController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/devices/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DevicesController_findOne"];
+        put?: never;
+        post?: never;
+        delete: operations["DevicesController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["DevicesController_update"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -237,12 +317,28 @@ export interface components {
             recordedBy: string;
             zone: components["schemas"]["Zone"];
         };
+        EnvironmentReading: {
+            id: number;
+            moisture: number;
+            temperature: number;
+            humidity: number;
+            /** Format: date-time */
+            recordedAt: string;
+            zone: components["schemas"]["Zone"];
+        };
+        Device: {
+            id: number;
+            deviceId: string;
+            zone: components["schemas"]["Zone"];
+        };
         Zone: {
             id: number;
             name: string;
             site: components["schemas"]["Site"];
             trees: components["schemas"]["Tree"][];
             wateringEvents: components["schemas"]["WateringEvent"][];
+            environmentReadings: components["schemas"]["EnvironmentReading"][];
+            devices: components["schemas"]["Device"][];
         };
         UpdateSiteDto: Record<string, never>;
         CreateTreeDto: {
@@ -281,6 +377,26 @@ export interface components {
             status?: string;
             notes?: string;
             treeId?: number;
+        };
+        CreateEnvironmentReadingDto: {
+            deviceId: string;
+            moisture?: number;
+            temperature?: number;
+            humidity?: number;
+        };
+        UpdateEnvironmentReadingDto: {
+            deviceId?: string;
+            moisture?: number;
+            temperature?: number;
+            humidity?: number;
+        };
+        CreateDeviceDto: {
+            deviceId: string;
+            zoneId: number;
+        };
+        UpdateDeviceDto: {
+            deviceId?: string;
+            zoneId?: number;
         };
     };
     responses: never;
@@ -876,6 +992,241 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    DashboardController_getWateringCoverage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    EnvironmentReadingsController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentReading"][];
+                };
+            };
+        };
+    };
+    EnvironmentReadingsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateEnvironmentReadingDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentReading"];
+                };
+            };
+        };
+    };
+    EnvironmentReadingsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    EnvironmentReadingsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    EnvironmentReadingsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateEnvironmentReadingDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    DevicesController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Device"][];
+                };
+            };
+        };
+    };
+    DevicesController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateDeviceDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Device"];
+                };
+            };
+        };
+    };
+    DevicesController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    DevicesController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    DevicesController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateDeviceDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
             };
         };
     };

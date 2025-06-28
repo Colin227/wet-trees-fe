@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Create/Edit Device</h2>
+<mat-dialog-content class="form-container">
+
+    <mat-form-field>
+        <mat-label>Device Name/ID</mat-label>
+        <input matInput [formControl]="form.controls.deviceId" />
+        @if (form.controls.deviceId.hasError('required')) {
+        <mat-error>Device ID is required</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Zone</mat-label>
+        <mat-select [formControl]="form.controls.zone">
+            @for(site of sites$ | async; track site.id) {
+            <mat-optgroup [label]="site.name">
+                @for(zone of site.zones; track zone.id) {
+                <mat-option [value]="zone.id">{{ zone.name }}</mat-option>
+                }
+            </mat-optgroup>
+            }
+        </mat-select>
+        @if (form.controls.zone.hasError('required')) {
+        <mat-error>A zone is required</mat-error>
+        }
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onConfirmClick()">Ok</button>
+</mat-dialog-actions>
