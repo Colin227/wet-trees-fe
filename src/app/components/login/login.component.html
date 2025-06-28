@@ -1,29 +1,35 @@
 <div class="login-container">
-  <mat-card class="login-card">
-    <mat-card-title>Login</mat-card-title>
-    <mat-card-content>
-      <form (ngSubmit)="login()" [formGroup]="form">
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" required />
-          <mat-error>Email is required</mat-error>
-        </mat-form-field>
+    <mat-card class="login-card">
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-content>
+            <form (ngSubmit)="login()" [formGroup]="form">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" type="email" required />
+                    <mat-error>Email is required</mat-error>
+                </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password" required />
-          <mat-error>Password is required</mat-error>
-        </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password" type="password" required />
+                    <mat-error>Password is required</mat-error>
+                </mat-form-field>
 
-        @if(error) {
-        <div class="error">{{ error }}</div>
-        }
+                @if(error) {
+                <div class="error">{{ error }}</div>
+                }
 
 
-        <button mat-raised-button color="primary" class="full-width" type="submit">
-          Login
-        </button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+                <button mat-raised-button [disabled]="loading" color="primary" class="full-width" type="submit">
+                    Login
+                </button>
+                @if(loading) {
+                <div class="loading-container">
+                    <mat-progress-spinner mode="indeterminate" diameter="20" strokeWidth="4"
+                        class="spinner"></mat-progress-spinner>
+                </div>
+                }
+            </form>
+        </mat-card-content>
+    </mat-card>
 </div>
