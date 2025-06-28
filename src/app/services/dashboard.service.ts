@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DashboardStats } from '@models';
+import { DashboardStats, WateringCoverage } from '@models';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,6 +14,10 @@ export class DashboardService {
 
   getStats(): Observable<DashboardStats> {
     return this._http.get<DashboardStats>('/api/dashboard/stats');
+  }
+
+  getWateringCoverage(): Observable<WateringCoverage> {
+    return this._http.get<WateringCoverage>('/api/dashboard/wateringCoverage');
   }
 
 }

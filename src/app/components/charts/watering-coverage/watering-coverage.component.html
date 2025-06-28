@@ -1,0 +1,17 @@
+<mat-card class="watering-coverage-chart">
+    <mat-card-header>
+        <mat-card-title>Zones Watered 💧</mat-card-title>
+        <mat-card-subtitle>Last 7 days</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        @if(this.chartOptions) {
+        <apx-chart [series]="chartOptions.series!" [chart]="chartOptions.chart!"
+            [labels]="chartOptions.labels!" [plotOptions]="chartOptions.plotOptions!" [fill]="chartOptions.fill!" [stroke]="chartOptions.stroke!"></apx-chart>
+        } @else {
+        <div class="loading-container">
+            <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+        </div>
+        }
+
+    </mat-card-content>
+</mat-card>

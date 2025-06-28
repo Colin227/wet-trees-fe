@@ -5,3 +5,7 @@ export type DashboardStats = {
   totalZones: number,
   recentWaterings: number
 }
+
+export type WateringCoverage = {
+  wateringCoverage: number
+}
