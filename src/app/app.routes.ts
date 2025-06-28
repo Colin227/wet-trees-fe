@@ -5,6 +5,7 @@ import { SitesComponent } from './components/sites/sites.component';
 import { WateringsComponent } from './components/waterings/waterings.component';
 import { DevicesComponent } from './components/devices/devices.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 export const routes: Routes = [
     {
@@ -30,5 +31,9 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'register',
+        component: RegisterComponent
     }
 ];

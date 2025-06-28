@@ -14,6 +14,10 @@ export class AuthService {
     this.http = _http;
   }
 
+  register(data: {email: string, password: string, firstName: string, lastName: string}) {
+    return this.http.post<void>(`${environment.baseUrl}/users`, data);
+  }
+
   login(email: string, password: string): Observable<{ access_token: string }> {
     return this.http.post<{ access_token: string }>(`${environment.baseUrl}/auth/login`, { email, password }).pipe(
       tap(response => localStorage.setItem(this.tokenKey, response.access_token))

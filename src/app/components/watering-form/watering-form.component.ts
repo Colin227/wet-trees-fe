@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CreateWateringDto, Site, WateringEvent, Zone } from '@models';
+import { AuthService } from 'app/services/auth.service';
 import { SitesService } from 'app/services/sites.service';
 import { WateringsService } from 'app/services/waterings.service';
 import { ZonesService } from 'app/services/zones.service';
@@ -25,6 +26,7 @@ export class WateringFormComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<WateringFormComponent>);
   readonly data = inject<Partial<WateringEvent>>(MAT_DIALOG_DATA);
   private _fb = inject(FormBuilder);
+  private _authService = inject(AuthService);
 
   private _wateringService = inject(WateringsService);
   private _sitesService = inject(SitesService);
