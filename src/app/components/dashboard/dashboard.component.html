@@ -1,0 +1,56 @@
+<h1 class="dashboard-title">Dashboard</h1>
+<div class="dashboard-wrapper">
+
+
+@if(stats) {
+<div class="stats-grid">
+    <mat-card class="stat-card">
+        <mat-card-title>Total Trees</mat-card-title>
+        <mat-card-content>{{ stats.totalTrees }}</mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card attention">
+        <mat-card-title>Trees Needing Attention</mat-card-title>
+        <mat-card-content>{{ stats.treesNeedingAttention }}</mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+        <mat-card-title>Total Sites</mat-card-title>
+        <mat-card-content>{{ stats.totalSites }}</mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+        <mat-card-title>Total Zones</mat-card-title>
+        <mat-card-content>{{ stats.totalZones }}</mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+        <mat-card-title>Waterings (Last 7 Days)</mat-card-title>
+        <mat-card-content>{{ stats.recentWaterings }}</mat-card-content>
+    </mat-card>
+</div>
+@if(chartOptions !== undefined) {
+  <mat-card class="apx-pie-chart-wrapper">
+    <mat-card-header>{{ currentDate | date }}</mat-card-header>
+    <mat-card-content>
+    <apx-chart 
+      [series]="chartOptions.series!"
+      [chart]="chartOptions.chart!"
+      [xaxis]="chartOptions.xaxis!"
+      [title]="chartOptions.title!"
+      [labels]="chartOptions.labels!"
+      [colors]="chartOptions.colors!"
+      [legend]="chartOptions.legend!"
+    ></apx-chart>
+    </mat-card-content>
+    </mat-card>
+
+}
+
+}
+@else {
+  <div class="loading-container">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+  </div>
+}
+</div>

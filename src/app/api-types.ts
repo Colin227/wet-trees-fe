@@ -142,12 +142,60 @@ export interface paths {
             cookie?: never;
         };
         get: operations["ZonesController_findOne"];
-        put?: never;
+        put: operations["ZonesController_update"];
         post?: never;
         delete: operations["ZonesController_remove"];
         options?: never;
         head?: never;
-        patch: operations["ZonesController_update"];
+        patch?: never;
+        trace?: never;
+    };
+    "/tree-health-logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TreeHealthLogsController_findAll"];
+        put?: never;
+        post: operations["TreeHealthLogsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tree-health-logs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TreeHealthLogsController_findOne"];
+        put?: never;
+        post?: never;
+        delete: operations["TreeHealthLogsController_remove"];
+        options?: never;
+        head?: never;
+        patch: operations["TreeHealthLogsController_update"];
+        trace?: never;
+    };
+    "/dashboard/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DashboardController_getStats"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
 }
@@ -164,6 +212,14 @@ export interface components {
             location: string;
             zones: components["schemas"]["Zone"][];
         };
+        TreeHealthLog: {
+            id: number;
+            /** Format: date-time */
+            date: string;
+            status: string;
+            notes?: string;
+            tree: components["schemas"]["Tree"];
+        };
         Tree: {
             id: number;
             species: string;
@@ -171,6 +227,7 @@ export interface components {
             plantedAt: string;
             status: string;
             zone: components["schemas"]["Zone"];
+            healthLogs: components["schemas"]["TreeHealthLog"][];
         };
         WateringEvent: {
             id: number;
@@ -212,6 +269,18 @@ export interface components {
             name?: string;
             location?: string;
             siteId?: number;
+        };
+        CreateTreeHealthLogDto: {
+            date: string;
+            status: string;
+            notes?: string;
+            treeId: number;
+        };
+        UpdateTreeHealthLogDto: {
+            date?: string;
+            status?: string;
+            notes?: string;
+            treeId?: number;
         };
     };
     responses: never;
@@ -640,25 +709,6 @@ export interface operations {
             };
         };
     };
-    ZonesController_remove: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     ZonesController_update: {
         parameters: {
             query?: never;
@@ -681,6 +731,151 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["Zone"];
                 };
+            };
+        };
+    };
+    ZonesController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TreeHealthLogsController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TreeHealthLog"][];
+                };
+            };
+        };
+    };
+    TreeHealthLogsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTreeHealthLogDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TreeHealthLog"];
+                };
+            };
+        };
+    };
+    TreeHealthLogsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TreeHealthLog"];
+                };
+            };
+        };
+    };
+    TreeHealthLogsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+        };
+    };
+    TreeHealthLogsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTreeHealthLogDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TreeHealthLog"];
+                };
+            };
+        };
+    };
+    DashboardController_getStats: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

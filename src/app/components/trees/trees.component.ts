@@ -27,7 +27,7 @@ export class TreesComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Partial<Tree>>();
 
-  displayedColumns: string[] = ['id', 'species', 'plantedAt', 'status', 'site', 'actions'];
+  displayedColumns: string[] = ['id', 'species', 'plantedAt', 'status', 'zone', 'actions'];
 
   @ViewChild(MatTable) table!: MatTable<Tree>;
 
@@ -36,7 +36,7 @@ export class TreesComponent implements OnInit {
       next: (trees: Tree[]) => {
         console.log('Trees loaded:', trees);
         this.dataSource.data = trees; // Update the data source for the table
-        this.table.renderRows(); // Refresh the table view
+        // this.table.renderRows(); // Refresh the table view
         this._trees$.next(trees);
       },
       error: (err) => {
