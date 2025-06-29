@@ -50,7 +50,6 @@ export class DevicesComponent implements OnInit {
   }
 
   createDevice() {
-    console.log("TODO")
     const dialogRef = this.dialog.open(DeviceFormComponent, {
       data: {}
     });
@@ -63,7 +62,6 @@ export class DevicesComponent implements OnInit {
   }
 
   editDevice(device: Device) {
-    console.log("TODO: Edit device ", device);
     const dialogRef = this.dialog.open(DeviceFormComponent, {
       data: device
     });
