@@ -1,59 +1,57 @@
-# WetTreesFe
+# 🌿 Enviro-Sensor Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+This is the Angular frontend for the **Enviro-Sensor** system. It provides a modern dashboard interface for visualizing environmental sensor data, managing devices, and monitoring zone conditions. Built with Angular Material and ApexCharts.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🖥️ Features
 
-```bash
-ng serve
-```
+- 🔐 JWT-based authentication and route protection
+- 📊 Dashboard with live and historical sensor data
+- 💧 Zone watering coverage and sensor health charts
+- 🌡️ Real-time preview of temperature, humidity, and moisture
+- 🔧 Register devices and view detailed reading history
+- 🧭 Site and zone management
+- 📈 Dynamic charts with [ApexCharts](https://apexcharts.com/)
+- 📡 WebSocket support for live data
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 🛠 Tech Stack
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Framework:** Angular 17+ (standalone components)
+- **UI Library:** Angular Material (dark theme)
+- **Charts:** ApexCharts via `ng-apexcharts`
+- **State Management:** RxJS with `BehaviorSubject`
+- **Routing:** Angular Router with `CanActivateFn` guards
+- **Auth:** HTTP Interceptor + LocalStorage for JWT
+- **WebSocket:** Socket.IO for real-time updates
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🚀 Getting Started
 
-```bash
-ng generate --help
-```
+### Prerequisites
 
-## Building
+- Node.js v18+
+- Angular CLI (`npm install -g @angular/cli`)
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Install Dependencies
 
 ```bash
-ng test
+npm install
 ```
 
-## Running end-to-end tests
+### Set Up Environment
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+Create an .env.ts file (or use environment.ts) in src/environments/:
+```typescript
+export const environment = {
+      baseUrl: '/api',
+      tokenKey: 'token',
+      websocketUrl: 'http://127.0.0.1:3000'
+};
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
