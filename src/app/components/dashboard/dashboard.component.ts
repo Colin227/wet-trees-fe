@@ -6,13 +6,14 @@ import { DashboardStats } from '@models';
 import { NgApexchartsModule, ApexOptions } from 'ng-apexcharts'
 import { DatePipe } from '@angular/common';
 import { WateringCoverageComponent } from "../charts/watering-coverage/watering-coverage.component";
+import { LatestReadingCardComponent } from "../charts/latest-reading-card/latest-reading-card.component";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [MatCardModule, MatProgressSpinnerModule, NgApexchartsModule, DatePipe, WateringCoverageComponent]
+  imports: [MatCardModule, MatProgressSpinnerModule, NgApexchartsModule, DatePipe, WateringCoverageComponent, LatestReadingCardComponent]
 })
 export class DashboardComponent implements OnInit {
   stats?: DashboardStats;
