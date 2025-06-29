@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DashboardService } from 'app/services/dashboard.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DashboardStats, EnvironmentReading, LatestReading } from '@models';
+import { DashboardStats } from '@models';
 import { NgApexchartsModule, ApexOptions } from 'ng-apexcharts'
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { WateringCoverageComponent } from "../charts/watering-coverage/watering-coverage.component";
 import { LatestReadingCardComponent } from "../charts/latest-reading-card/latest-reading-card.component";
-import { BehaviorSubject } from 'rxjs';
 import { SocketService } from 'app/services/socket.service';
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -18,24 +16,16 @@ import { SocketService } from 'app/services/socket.service';
   imports: [MatCardModule, MatProgressSpinnerModule, NgApexchartsModule, DatePipe, WateringCoverageComponent, LatestReadingCardComponent, AsyncPipe]
 })
 export class DashboardComponent implements OnInit {
+  private _socketService = inject(SocketService);
   stats?: DashboardStats;
   chartOptions?: ApexOptions;
-
-  private _latestReading$ = new BehaviorSubject<LatestReading | null>(null);
-  public latestReading$ = this._latestReading$.asObservable();
+  readonly latestReading$ = this._socketService.getLatestReading();
   currentDate = new Date();
 
-
-  constructor(private dashboardService: DashboardService, private _socketService: SocketService) {
-
-  }
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    this._socketService.onMessage((msg: EnvironmentReading) => {
-      this._latestReading$.next(msg);
-    })
     this.dashboardService.getStats().subscribe(data => {
-
       this.stats = data;
       this.chartOptions = {
         chart: { type: 'donut', background: "transparent" },

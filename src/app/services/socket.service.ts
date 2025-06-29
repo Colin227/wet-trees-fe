@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { EnvironmentReading } from '@models';
 import { environment } from 'environments/environment';
 
@@ -10,16 +10,16 @@ import { environment } from 'environments/environment';
 export class SocketService {
 
   private socket: Socket;
+  private _reading$ = new ReplaySubject<EnvironmentReading>(1);
 
   constructor() {
-    this.socket = io(`${environment.websocketUrl}`); // Update with backend host if needed
+    this.socket = io(`${environment.websocketUrl}`);
+    this.socket.on('new-reading', (data: EnvironmentReading) => {
+      this._reading$.next(data);
+    });
   }
 
-  sendMessage(message: string): void {
-    this.socket.emit('message', message);
-  }
-
-  onMessage(callback: (message: EnvironmentReading) => void): void {
-    this.socket.on('new-reading', callback);
+  getLatestReading(): Observable<EnvironmentReading> {
+    return this._reading$.asObservable();
   }
 }
