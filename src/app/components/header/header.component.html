@@ -3,13 +3,31 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span>Tree Time🌳</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
+  <span class="spacer"></span>
+
+  @if(isAuthenticated()) {
+
+  
+   <button
+    mat-raised-button
+    [matMenuTriggerFor]="userMenu"
+    aria-label="User menu"
+  >
+    <mat-icon>account_circle</mat-icon>
+    {{ getFirstName() }}
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
+  }
+  
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item disabled>
+      {{ getEmail() }}
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 
@@ -29,5 +47,9 @@
   <button mat-menu-item routerLink="waterings">
     <mat-icon>water_drop</mat-icon>
     <span>Waterings</span>
+  </button>
+    <button mat-menu-item routerLink="devices">
+    <mat-icon>monitor_heart</mat-icon>
+    <span>Monitoring Devices</span>
   </button>
 </mat-menu>

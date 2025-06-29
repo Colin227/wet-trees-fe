@@ -1,3 +1,4 @@
 export const environment = {
-    baseUrl: '/api'
+    baseUrl: '/api',
+    tokenKey: 'token'
 };
