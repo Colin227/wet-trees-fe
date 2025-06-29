@@ -42,8 +42,11 @@
   }
 
   <app-watering-coverage></app-watering-coverage>
+  @let latest = latestReading$ | async;
 
-  <app-latest-reading-card [latest]="{ temperature: 0, humidity: 0, moisture: 0 }"></app-latest-reading-card>
+  <app-latest-reading-card [latest]="latest"></app-latest-reading-card>
+
+
 
   }
   @else {

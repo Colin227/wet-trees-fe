@@ -1,6 +1,7 @@
 <mat-card class="latest-reading-card">
     <mat-card-title>Latest Soil Reading</mat-card-title>
-    
+    <mat-card-subtitle>{{latest?.zone?.name}}</mat-card-subtitle>
+
     <mat-card-content class="reading-content">
         <div class="reading">
             <mat-icon class="reading-icon">thermostat</mat-icon>
@@ -13,6 +14,10 @@
         <div class="reading">
             <mat-icon class="reading-icon">grass</mat-icon>
             <span>{{ latest?.moisture }}%</span>
+        </div>
+        <div class="date">
+            <mat-icon class="date-icon">calendar_month</mat-icon>
+            <span>{{ latest?.recordedAt | date: 'short' }}</span>
         </div>
     </mat-card-content>
 </mat-card>

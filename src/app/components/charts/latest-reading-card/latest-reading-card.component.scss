@@ -29,4 +29,20 @@
             color: #38bdf8; // accent blue
         }
     }
+
+    .date {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        span {
+            font-size: small;
+            color: #a7a7a7;
+        }
+
+        .date-icon {
+            color: #a7a7a7;
+        }
+    }
+
 }
