@@ -1,6 +1,12 @@
 <mat-card class="latest-reading-card">
     <mat-card-title>Latest Soil Reading</mat-card-title>
-    <mat-card-subtitle>{{latest?.zone?.name}}</mat-card-subtitle>
+    <mat-card-subtitle><span>{{latest?.zone?.name}}</span>
+        @if(isOnline(latest?.recordedAt)) {
+            <mat-icon class="sensor-online" matTooltip="Online">sensors</mat-icon>
+        } @else {
+            <mat-icon class="sensor-offline" matTooltip="Offline">sensors_off</mat-icon>
+        }
+        </mat-card-subtitle>
 
     <mat-card-content class="reading-content">
         <div class="reading">

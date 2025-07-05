@@ -6,10 +6,12 @@
     width: 100%;
     max-width: 300px;
 
-    .mat-card-title {
-        font-size: 1.2rem;
-        color: #ffffff;
-        margin-bottom: 1rem;
+    mat-card-subtitle {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-right: 10px;
+        padding: 5px 0px;
     }
 
     .reading-content {
@@ -44,4 +46,13 @@
         }
     }
 
+}
+
+.sensor-online {
+    
+    color: rgb(0, 160, 0);
+}
+
+.sensor-offline {
+    color: red;
 }
