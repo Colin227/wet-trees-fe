@@ -78,7 +78,8 @@ export class DeviceViewDialogComponent implements OnInit {
               style: { color: '#ccc' }
             },
             labels: {
-              style: { colors: '#ccc' }
+              style: { colors: '#ccc' },
+              datetimeUTC: false,
             }
           },
           yaxis: {

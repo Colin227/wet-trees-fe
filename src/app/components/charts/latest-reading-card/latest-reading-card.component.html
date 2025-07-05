@@ -1,0 +1,29 @@
+<mat-card class="latest-reading-card">
+    <mat-card-title>Latest Soil Reading</mat-card-title>
+    <mat-card-subtitle><span>{{latest?.zone?.name}}</span>
+        @if(isOnline(latest?.recordedAt)) {
+            <mat-icon class="sensor-online" matTooltip="Online">sensors</mat-icon>
+        } @else {
+            <mat-icon class="sensor-offline" matTooltip="Offline">sensors_off</mat-icon>
+        }
+        </mat-card-subtitle>
+
+    <mat-card-content class="reading-content">
+        <div class="reading">
+            <mat-icon class="reading-icon">thermostat</mat-icon>
+            <span>{{ latest?.temperature }}°C</span>
+        </div>
+        <div class="reading">
+            <mat-icon class="reading-icon">water_drop</mat-icon>
+            <span>{{ latest?.humidity }}%</span>
+        </div>
+        <div class="reading">
+            <mat-icon class="reading-icon">grass</mat-icon>
+            <span>{{ latest?.moisture }}%</span>
+        </div>
+        <div class="date">
+            <mat-icon class="date-icon">calendar_month</mat-icon>
+            <span>{{ latest?.recordedAt | date: 'short' }}</span>
+        </div>
+    </mat-card-content>
+</mat-card>

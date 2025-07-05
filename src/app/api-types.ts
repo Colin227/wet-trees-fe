@@ -246,6 +246,22 @@ export interface paths {
         patch: operations["EnvironmentReadingsController_update"];
         trace?: never;
     };
+    "/environment-readings/device/{deviceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["EnvironmentReadingsController_findByDevice"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/devices": {
         parameters: {
             query?: never;
@@ -276,6 +292,86 @@ export interface paths {
         options?: never;
         head?: never;
         patch: operations["DevicesController_update"];
+        trace?: never;
+    };
+    "/devices/{id}/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DevicesController_getConfig"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["DevicesController_updateConfig"];
+        trace?: never;
+    };
+    "/devices/{deviceId}/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DevicesController_getHealth"];
+        put?: never;
+        post: operations["DevicesController_updateHealth"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AuthController_login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UsersController_getProfile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UsersController_register"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
 }
@@ -330,6 +426,7 @@ export interface components {
             id: number;
             deviceId: string;
             zone: components["schemas"]["Zone"];
+            config: Record<string, never>;
         };
         Zone: {
             id: number;
@@ -358,12 +455,10 @@ export interface components {
         UpdateWateringEventDto: Record<string, never>;
         CreateZoneDto: {
             name: string;
-            location: string;
             siteId: number;
         };
         UpdateZoneDto: {
             name?: string;
-            location?: string;
             siteId?: number;
         };
         CreateTreeHealthLogDto: {
@@ -397,6 +492,49 @@ export interface components {
         UpdateDeviceDto: {
             deviceId?: string;
             zoneId?: number;
+        };
+        UpdateDeviceConfigDto: {
+            reportIntervalSeconds?: number;
+            debugMode?: boolean;
+        };
+        UpdateDeviceStatusDto: {
+            batteryLevel?: number;
+            signalStrength?: number;
+            firmwareVersion?: string;
+            freeMemory?: number;
+        };
+        DeviceStatus: {
+            id: number;
+            deviceId: string;
+            batteryLevel?: number;
+            signalStrength?: number;
+            firmwareVersion?: string;
+            /** @enum {string} */
+            status: "online" | "offline" | "unknown";
+            freeMemory?: number;
+            /** Format: date-time */
+            lastSeen: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        LoginDto: {
+            /** Format: email */
+            email: string;
+            password: string;
+        };
+        CreateUserDto: {
+            /** Format: email */
+            email: string;
+            password: string;
+            firstName: string;
+            lastName: string;
+        };
+        SafeUserDto: {
+            id: number;
+            /** Format: email */
+            email: string;
+            firstName: string;
+            lastName: string;
         };
     };
     responses: never;
@@ -1121,6 +1259,27 @@ export interface operations {
             };
         };
     };
+    EnvironmentReadingsController_findByDevice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                deviceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EnvironmentReading"][];
+                };
+            };
+        };
+    };
     DevicesController_findAll: {
         parameters: {
             query?: never;
@@ -1226,6 +1385,161 @@ export interface operations {
                 };
                 content: {
                     "application/json": string;
+                };
+            };
+        };
+    };
+    DevicesController_getConfig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+        };
+    };
+    DevicesController_updateConfig: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateDeviceConfigDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Device"];
+                };
+            };
+        };
+    };
+    DevicesController_getHealth: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                deviceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeviceStatus"];
+                };
+            };
+        };
+    };
+    DevicesController_updateHealth: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                deviceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateDeviceStatusDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeviceStatus"];
+                };
+            };
+        };
+    };
+    AuthController_login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UsersController_getProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+        };
+    };
+    UsersController_register: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateUserDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SafeUserDto"];
                 };
             };
         };

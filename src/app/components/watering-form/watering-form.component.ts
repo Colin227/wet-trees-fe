@@ -8,10 +8,10 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { CreateWateringDto, Site, WateringEvent, Zone } from '@models';
+import { CreateWateringDto, Site, WateringEvent } from '@models';
 import { SitesService } from 'app/services/sites.service';
+import { UserService } from 'app/services/user.service';
 import { WateringsService } from 'app/services/waterings.service';
-import { ZonesService } from 'app/services/zones.service';
 import { createWateringDtoFromForm } from 'app/utils/watering.dto-factories';
 import { Observable } from 'rxjs';
 
@@ -25,6 +25,7 @@ export class WateringFormComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<WateringFormComponent>);
   readonly data = inject<Partial<WateringEvent>>(MAT_DIALOG_DATA);
   private _fb = inject(FormBuilder);
+  private _userService = inject(UserService);
 
   private _wateringService = inject(WateringsService);
   private _sitesService = inject(SitesService);
@@ -35,7 +36,7 @@ export class WateringFormComponent implements OnInit {
     id: [this.data?.id || null],
     wateredAt: [this.data?.wateredAt || new Date(), Validators.required],
     notes: [this.data?.notes || '', Validators.maxLength(500)],
-    recordedBy: [this.data?.recordedBy || '', Validators.required],
+    recordedBy: [this.data?.recordedBy || this._userService.getFullName(), Validators.required],
     zoneId: [this.data?.zone?.id || null, Validators.required],
   });
   isEditMode = !!this.data?.id;
@@ -43,14 +44,14 @@ export class WateringFormComponent implements OnInit {
   ngOnInit(): void {
     this.sites$ = this._sitesService.getAllSites();
   }
-  
+
   onConfirmClick(): void {
     this.submit();
   }
   onCancelClick(): void {
     this.dialogRef.close();
   }
-  
+
   submit(): void {
     if (this.form.invalid) {
       console.log("FORM IS INVALID", this.form);
@@ -58,7 +59,7 @@ export class WateringFormComponent implements OnInit {
     }
 
     let dto: CreateWateringDto;
-    
+
     if (this.isEditMode) {
       dto = createWateringDtoFromForm(this.form); // TODO: Fix the type to UpdateWateringDto
       this._updateWatering(dto);
@@ -79,7 +80,7 @@ export class WateringFormComponent implements OnInit {
       }
     });
   }
-  
+
   private _updateWatering(dto: CreateWateringDto): void {
     this._wateringService.updateWatering(this.data!.id!, dto).subscribe({
       next: (watering) => {

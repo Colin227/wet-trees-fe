@@ -33,13 +33,16 @@ export class DeviceFormComponent implements OnInit {
   form = this._fb.group({
     id: [this.data?.id || null],
     deviceId: [this.data?.deviceId || '', Validators.required],
-    zone: [this.data?.zone.id || '', Validators.required],
+    zone: [this.data?.zone?.id || '', Validators.required],
   });
 
   isEditMode = !!this.data?.id;
 
   ngOnInit(): void {
     this.sites$ = this._sitesService.getAllSites();
+    if (this.isEditMode) {
+      this.form.controls.deviceId.disable();
+    }
   }
 
   onConfirmClick(): void {
