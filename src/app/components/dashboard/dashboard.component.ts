@@ -52,8 +52,4 @@ export class DashboardComponent implements OnInit {
       };
     });
   }
-
-  // private _initPieChart = (stats: DashboardStats) => {
-
-  // }
 }

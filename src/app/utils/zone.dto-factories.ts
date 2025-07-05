@@ -4,7 +4,6 @@ import {CreateZoneDto } from '@models';
 export function createZoneDtoFromForm(form: FormGroup): CreateZoneDto {
   return {
     name: form.get('name')?.value,
-    location: form.get('location')?.value,
     siteId: form.get('siteId')?.value,
   };
 }

@@ -78,7 +78,6 @@ export class DevicesComponent implements OnInit {
   }
 
   viewDevice(device: Device) {
-    console.log("TODO: View device")
     const dialogRef = this.dialog.open(DeviceViewDialogComponent, {
       data: device,
       width: '900px',
